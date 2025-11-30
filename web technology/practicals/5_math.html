@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>5 - Math Class</title>
+  <style>body{font-family:Arial;margin:20px}label{display:block;margin-top:8px}</style>
+</head>
+<body>
+  <h1>Math Class (JS)</h1>
+  <label>Number A: <input id="a" type="number" value="12"></label>
+  <label>Number B: <input id="b" type="number" value="8"></label>
+  <div style="margin-top:10px">
+    <button onclick="runOp('add')">Add</button>
+    <button onclick="runOp('sub')">Subtract</button>
+    <button onclick="runOp('mul')">Multiply</button>
+    <button onclick="runOp('div')">Divide</button>
+    <button onclick="runOp('pow')">Power (A^B)</button>
+  </div>
+  <p id="result" style="margin-top:12px;font-weight:600"></p>
+
+  <script>
+    class MathClass {
+      add(x,y){return x+y}
+      sub(x,y){return x-y}
+      mul(x,y){return x*y}
+      div(x,y){return y===0? 'Error: divide by zero' : x/y}
+      pow(x,y){return Math.pow(x,y)}
+    }
+
+    const m = new MathClass();
+    function runOp(op){
+      const a = parseFloat(document.getElementById('a').value) || 0;
+      const b = parseFloat(document.getElementById('b').value) || 0;
+      let out;
+      switch(op){
+        case 'add': out = m.add(a,b); break;
+        case 'sub': out = m.sub(a,b); break;
+        case 'mul': out = m.mul(a,b); break;
+        case 'div': out = m.div(a,b); break;
+        case 'pow': out = m.pow(a,b); break;
+      }
+      document.getElementById('result').textContent = 'Result: ' + out;
+    }
+  </script>
+</body>
+</html>

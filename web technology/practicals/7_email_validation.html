@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>7 - Email Validation</title>
+  <style>body{font-family:Arial;margin:16px}input{padding:6px}</style>
+</head>
+<body>
+  <h1>Email Validation Form</h1>
+  <form id="f" onsubmit="event.preventDefault(); validate()">
+    <label>Email: <input id="email" type="email" required></label>
+    <div style="margin-top:8px">
+      <button type="submit">Validate</button>
+    </div>
+  </form>
+  <p id="out" style="font-weight:600"></p>
+
+  <script>
+    function validate(){
+      const s = document.getElementById('email').value.trim();
+      // Simple but practical regex for email validation
+      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const ok = re.test(s);
+      const out = document.getElementById('out');
+      if(ok) out.textContent = 'Valid email ✓'; else out.textContent = 'Invalid email ✗';
+      out.style.color = ok ? 'green' : 'crimson';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+#intro {
+  color: #2a6f97;
+  background-color: #eef6fb;
+  padding: 10px 12px;
+  border-left: 4px solid #2a6f97;
+  font-family: Arial, sans-serif;
+  font-size: 1.05rem;
+}
+
+body {
+  margin: 20px;
+}

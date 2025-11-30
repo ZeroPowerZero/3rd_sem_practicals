@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>8 - Analyze Paragraph</title>
+  <style>body{font-family:Arial;margin:16px}textarea{width:100%;height:140px}</style>
+</head>
+<body>
+  <h1>Analyze Paragraph</h1>
+  <textarea id="txt">Type or paste a paragraph here. This tool counts words, characters and sentences, and shows top word frequencies.</textarea>
+  <div style="margin-top:8px">
+    <button onclick="analyze()">Analyze</button>
+  </div>
+  <div id="out" style="margin-top:12px"></div>
+
+  <script>
+    function analyze(){
+      const s = document.getElementById('txt').value;
+      const chars = s.length;
+      const words = s.trim() ? s.trim().split(/\s+/) : [];
+      const wordCount = words.length;
+      const sentences = s.split(/[.!?]+/).filter(p=>p.trim()).length;
+      const freq = {};
+      words.forEach(w=>{
+        const k = w.replace(/[^a-zA-Z0-9']/g,'').toLowerCase();
+        if(!k) return;
+        freq[k] = (freq[k]||0)+1;
+      });
+      const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      const out = document.getElementById('out');
+      out.innerHTML = `<b>Chars:</b> ${chars} &nbsp; <b>Words:</b> ${wordCount} &nbsp; <b>Sentences:</b> ${sentences}`;
+      if(top.length){
+        out.innerHTML += '<h3>Top words</h3><ol>' + top.map(t=>`<li>${t[0]} — ${t[1]}</li>`).join('') + '</ol>';
+      }
+    }
+  </script>
+</body>
+</html>

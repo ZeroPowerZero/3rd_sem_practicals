@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>9 - Analyze + Replace + Frequency</title>
+  <style>body{font-family:Arial;margin:16px}textarea{width:100%;height:140px}</style>
+</head>
+<body>
+  <h1>Analyze + Replace + Frequency</h1>
+  <textarea id="txt">apple banana apple orange apple banana pear</textarea>
+  <label>Find: <input id="find" value="apple"></label>
+  <label>Replace: <input id="repl" value="kiwi"></label>
+  <div style="margin-top:8px">
+    <button onclick="doReplaceAndAnalyze(true)">Replace All & Analyze</button>
+    <button onclick="doReplaceAndAnalyze(false)">Analyze Only</button>
+  </div>
+  <div id="out" style="margin-top:12px"></div>
+
+  <script>
+    function doReplaceAndAnalyze(replaceAll){
+      let txt = document.getElementById('txt').value;
+      const find = document.getElementById('find').value;
+      const repl = document.getElementById('repl').value;
+      if(replaceAll && find){
+        const re = new RegExp(escapeRegExp(find), 'g');
+        txt = txt.replace(re, repl);
+      }
+      // analyze frequency
+      const words = txt.trim() ? txt.trim().split(/\s+/) : [];
+      const freq = {};
+      words.forEach(w=>{
+        const k = w.replace(/[^a-zA-Z0-9']/g,'').toLowerCase();
+        if(!k) return;
+        freq[k] = (freq[k]||0)+1;
+      });
+      const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+      const out = document.getElementById('out');
+      out.innerHTML = '<h3>Resulting text</h3><pre style="background:#f4f4f4;padding:8px">'+escapeHtml(txt)+'</pre>';
+      out.innerHTML += '<h3>Frequencies</h3>' + (top.length ? '<ul>'+top.map(t=>`<li>${t[0]}: ${t[1]}</li>`).join('')+'</ul>' : '<p>No words</p>');
+    }
+    function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
+    function escapeHtml(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])) }
+  </script>
+</body>
+</html>
